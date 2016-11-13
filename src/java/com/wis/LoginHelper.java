@@ -11,15 +11,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Falcon
- */
 public class LoginHelper extends HttpServlet {
 
     /**
@@ -35,7 +33,10 @@ public class LoginHelper extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                response.sendRedirect(".");
+                //response.sendRedirect(".");
+                
+            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/login-index.jsp");
+            view.forward(request, response);    
     }
 
     @Override
@@ -48,7 +49,10 @@ public class LoginHelper extends HttpServlet {
         } else {
             DBConnection db = new DBConnection();
             try {
-                out.print(db.doLogin(request.getParameter("username"), request.getParameter("password")));
+                FlashMessage.createInfoMessage(request.getSession(), db.doLogin(request.getParameter("username"), request.getParameter("password")), "WTF");
+                HttpSession session = request.getSession();
+                session.setAttribute("userRole", "user-admin");
+                response.sendRedirect("cpanel");
             } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
                 Logger.getLogger(LoginHelper.class.getName()).log(Level.SEVERE, null, ex);
             }

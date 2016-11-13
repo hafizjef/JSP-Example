@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.wis;
 
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +12,12 @@ public class DBConnection {
     
     Connection conn = null;
     
+    /*
+    * TODOS;
+    * - Change doLogin to int?
+    * - Implement error message to login page
+    * - Implement session handling
+    */
     public String doLogin(String uname, String passw) throws NoSuchAlgorithmException, InvalidKeySpecException{
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -26,9 +27,9 @@ public class DBConnection {
             ResultSet rs = pst.executeQuery();
             
             if(rs.next()){
-                
+                // Get StoredHash from DB
                 String securePass = rs.getString("password");
-                
+                // Validate password with StoredHash
                 if(SecurityHelper.validatePassword(passw, securePass)==true){
                     return "User valid";
                 } else {

@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +49,7 @@
 </head>
 <body class="bg-darkTeal">
     <div class="login-form padding20 block-shadow">
-        <form action="validate" method="post">
+        <form action="" method="post">
             <h1 class="text-light">Login to WIS</h1>
             <hr class="thin"/>
             <br />
@@ -72,5 +72,6 @@
             </div>
         </form>
     </div>
+    <tags:flash-message/>
 </body>
 </html>
