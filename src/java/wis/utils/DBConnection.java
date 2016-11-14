@@ -1,5 +1,6 @@
-package com.wis;
+package wis.utils;
 
+import wis.utils.SecurityHelper;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;

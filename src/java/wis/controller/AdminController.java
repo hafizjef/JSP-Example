@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wis;
+package wis.controller;
 
+import wis.utils.FlashMessage;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,7 +44,7 @@ public class AdminController extends HttpServlet {
             view.forward(request, response); 
         } else {
             request.getSession().invalidate();
-            FlashMessage.createAlertMessage(request.getSession(), "Session Role: " + userRole, "No Permission");
+            FlashMessage.createAlertMessage(request.getSession(), "Welcome User " + userRole, "No Permission");
             response.sendRedirect("");
         }
     }

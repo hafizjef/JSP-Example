@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wis;
+package wis.controller;
 
+import wis.utils.DBConnection;
+import wis.utils.FlashMessage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -49,7 +51,7 @@ public class LoginHelper extends HttpServlet {
         } else {
             DBConnection db = new DBConnection();
             try {
-                FlashMessage.createInfoMessage(request.getSession(), db.doLogin(request.getParameter("username"), request.getParameter("password")), "WTF");
+                FlashMessage.createInfoMessage(request.getSession(false), db.doLogin(request.getParameter("username"), request.getParameter("password")), "WTF");
                 HttpSession session = request.getSession();
                 session.setAttribute("userRole", "user-admin");
                 response.sendRedirect("cpanel");

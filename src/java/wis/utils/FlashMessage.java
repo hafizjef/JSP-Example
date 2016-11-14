@@ -1,4 +1,4 @@
-package com.wis;
+package wis.utils;
 
 import javax.servlet.http.HttpSession;
 
