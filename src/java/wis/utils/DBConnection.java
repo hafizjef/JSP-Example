@@ -1,6 +1,5 @@
 package wis.utils;
 
-import wis.utils.SecurityHelper;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
@@ -11,36 +10,51 @@ public class DBConnection {
     private final String userName = "root";
     private final String password = "root";
     
-    Connection conn = null;
     
     /*
     * TODOS;
     * - Change doLogin to int?
     * - Implement error message to login page
     * - Implement session handling
+    * RETURN CODES;
+    * 0 = Default (Application Error)
+    * 1 = Successfull Login
+    * 2 = Authentication Error
+    * 3 = User not found
     */
-    public String doLogin(String uname, String passw) throws NoSuchAlgorithmException, InvalidKeySpecException{
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url, userName, password);
-            PreparedStatement pst = conn.prepareStatement("SELECT username,password FROM users WHERE username=? LIMIT 1");
-            pst.setString(1, uname);
-            ResultSet rs = pst.executeQuery();
-            
+    public int doLogin(String uname, String passw) throws NoSuchAlgorithmException, 
+            InvalidKeySpecException, ClassNotFoundException{
+        
+        Class.forName("com.mysql.jdbc.Driver");
+        
+        // Try with resource
+        try (
+                Connection con = DriverManager.getConnection(url, userName, password);
+                PreparedStatement ps = createLoginStatement(con, uname); 
+                ResultSet rs = ps.executeQuery()
+            ) {
+
             if(rs.next()){
+                
                 // Get StoredHash from DB
                 String securePass = rs.getString("password");
+                
                 // Validate password with StoredHash
                 if(SecurityHelper.validatePassword(passw, securePass)==true){
-                    return "User valid";
-                } else {
-                    return "User invalid";
-                }
-            } else {
-                return "User Not Found";
-            }
-        } catch(SQLException | ClassNotFoundException ex){
-            return "Error: " + ex.getMessage();
-        }        
+                    return 1;
+                } else { return 2; }    
+            } else { return 3; }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
+    
+    private PreparedStatement createLoginStatement(Connection con, String uname) throws SQLException {
+        String sql = "SELECT username,password FROM users WHERE username=? LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, uname);
+        return ps;
     }
 }

@@ -3,7 +3,7 @@
     <!-- Define a servlet -->
     <servlet>
         <servlet-name>LoginHelper</servlet-name>
-        <servlet-class>wis.controller.LoginHelper</servlet-class>
+        <servlet-class>wis.controller.LoginController</servlet-class>
     </servlet>
     <!-- Map servlet to specific URL -->
     <servlet>

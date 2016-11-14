@@ -39,13 +39,13 @@ public class AdminController extends HttpServlet {
             userRole = session.getAttribute("userRole").toString();
         } catch (Exception ex) {}
         
-        if(userRole.equals("user-admin")){
-            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
-            view.forward(request, response); 
-        } else {
+        if(!userRole.equals("user-admin")){
             request.getSession().invalidate();
-            FlashMessage.createAlertMessage(request.getSession(), "Welcome User " + userRole, "No Permission");
+            FlashMessage.createWarnMessage(request.getSession(), "You have been logged out Please login again", "Session Timeout");
             response.sendRedirect("");
+        } else {
+            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
+            view.forward(request, response);
         }
     }
 
