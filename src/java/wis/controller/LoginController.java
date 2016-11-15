@@ -75,14 +75,16 @@ public class LoginController extends HttpServlet {
                 
                 switch (loginStatus) {
                     case 1:
-                        session.setAttribute("username", username);
+                        
                         if(db.isAdmin()){
                             sessionContainer ss = new sessionContainer(request.getSession(false), true);
+                            session.setAttribute("username", username);
                             FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
                             response.sendRedirect("cpanel");
                             break;
                         } else {
                             sessionContainer ss = new sessionContainer(request.getSession(false), false);
+                            session.setAttribute("username", username);
                             FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
                             response.sendRedirect("manage");
                             break;
