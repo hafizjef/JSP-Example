@@ -10,6 +10,9 @@ public class DBConnection {
     private final String userName = "root";
     private final String password = "root";
     
+    private int userId = 0;
+    private int isAdmin = 0;
+    
     
     /*
     * TODOS;
@@ -38,6 +41,8 @@ public class DBConnection {
                 
                 // Get StoredHash from DB
                 String securePass = rs.getString("password");
+                userId = rs.getInt("user_id");
+                isAdmin = rs.getInt("is_admin");
                 
                 // Validate password with StoredHash
                 if(SecurityHelper.validatePassword(passw, securePass)==true){
@@ -51,8 +56,17 @@ public class DBConnection {
         }
     }
     
+    public int getUserId(){
+        return userId;
+    }
+    
+    public boolean isAdmin(){
+        return isAdmin != 0;
+    }
+    
+    
     private PreparedStatement createLoginStatement(Connection con, String uname) throws SQLException {
-        String sql = "SELECT username,password FROM users WHERE username=? LIMIT 1";
+        String sql = "SELECT * FROM users WHERE username=? LIMIT 1";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, uname);
         return ps;

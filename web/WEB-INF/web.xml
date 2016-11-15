@@ -10,6 +10,14 @@
         <servlet-name>AdminController</servlet-name>
         <servlet-class>wis.controller.AdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>wis.controller.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>wis.controller.UserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginHelper</servlet-name>
         <url-pattern>""</url-pattern>
@@ -17,6 +25,14 @@
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
         <url-pattern>/cpanel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/manage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>5</session-timeout>

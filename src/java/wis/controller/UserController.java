@@ -5,20 +5,21 @@
  */
 package wis.controller;
 
-import wis.utils.FlashMessage;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import wis.utils.FlashMessage;
 import wis.utils.sessionContainer;
 
 /**
  *
  * @author Falcon
  */
-public class AdminController extends HttpServlet {
+public class UserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +32,11 @@ public class AdminController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         
-        
-        if(sessionContainer.isAdmin()){
-            
-            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
+        if(sessionContainer.isLoggedIn()){
+            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/user-panel.jsp");
             view.forward(request, response);
-            
-        } else if (sessionContainer.isLoggedIn()) {
-            
-            response.sendRedirect("manage");
-            
         } else {
             request.getSession().invalidate();
             FlashMessage.createWarnMessage(request.getSession(), "You are not logged in<br>Please login again", "Invalid Session");

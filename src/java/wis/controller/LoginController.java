@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import wis.utils.sessionContainer;
 
 public class LoginController extends HttpServlet {
 
@@ -38,18 +39,18 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession(false);
-        String userRole = "";
         
-        try {
-            userRole = session.getAttribute("userRole").toString();
-        } catch (Exception ex) {}
         
-        if(!userRole.equals("user-admin")){
-            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/login-index.jsp");
-            view.forward(request, response); 
-        } else {
+        if (sessionContainer.isAdmin()) {
             response.sendRedirect("cpanel");
+        } else if (sessionContainer.isLoggedIn()) {
+            response.sendRedirect("manage");
+        } else {
+            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/login-index.jsp");
+            view.forward(request, response);
         }
+        
+        
     }
 
     @Override
@@ -70,13 +71,22 @@ public class LoginController extends HttpServlet {
             try {
                 
                 int loginStatus = db.doLogin(username, password);
+                session.setAttribute("userId", db.getUserId());
                 
                 switch (loginStatus) {
                     case 1:
-                        session.setAttribute("userRole", "user-admin");
-                        FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
-                        response.sendRedirect("cpanel");
-                        break;
+                        session.setAttribute("username", username);
+                        if(db.isAdmin()){
+                            sessionContainer ss = new sessionContainer(request.getSession(false), true);
+                            FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
+                            response.sendRedirect("cpanel");
+                            break;
+                        } else {
+                            sessionContainer ss = new sessionContainer(request.getSession(false), false);
+                            FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
+                            response.sendRedirect("manage");
+                            break;
+                        }
                     case 2:
                         FlashMessage.createWarnMessage(session, "Incorrect Username/Password combination", "Authentication Error");
                         response.sendRedirect("");

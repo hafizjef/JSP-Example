@@ -3,4 +3,5 @@
 
 <t:Base-Panel title="Admin Panel">
     <h1>YOLO</h1>
+    ${userId}
 </t:Base-Panel>
