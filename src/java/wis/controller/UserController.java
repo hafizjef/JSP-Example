@@ -6,14 +6,13 @@
 package wis.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import wis.utils.FlashMessage;
-import wis.utils.sessionContainer;
 
 /**
  *
@@ -33,8 +32,13 @@ public class UserController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession(false);
         
-        if(sessionContainer.isLoggedIn()){
+        String user;
+        try { user = session.getAttribute("userRole").toString(); }
+        catch (Exception ex) { user = ""; }
+        
+        if(user.equals("user-user") || user.equals("user-admin")){
             RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/user-panel.jsp");
             view.forward(request, response);
         } else {

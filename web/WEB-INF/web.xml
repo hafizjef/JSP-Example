@@ -35,7 +35,7 @@
         <url-pattern>/manage</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>5</session-timeout>
+        <session-timeout>15</session-timeout>
         <cookie-config>
             <max-age>3600</max-age>
         </cookie-config>

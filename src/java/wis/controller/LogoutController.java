@@ -10,8 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import wis.utils.FlashMessage;
-import wis.utils.sessionContainer;
 
 /**
  *
@@ -31,9 +31,14 @@ public class LogoutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession(false);
         
-        if(sessionContainer.isLoggedIn()){
-            sessionContainer.logOut();
+        String user;
+        try { user = session.getAttribute("userRole").toString(); }
+        catch (Exception ex) { user = ""; }
+        
+        if(user.equals("user-user") || user.equals("user-admin")){
+            session.invalidate();
             FlashMessage.createInfoMessage(request.getSession(), "You have been successfully logged out", "Logged Out");
         }
         

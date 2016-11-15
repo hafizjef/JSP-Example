@@ -12,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import wis.utils.sessionContainer;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,21 +32,28 @@ public class AdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession(false);
+
+        String user;
+        try { user = session.getAttribute("userRole").toString(); }
+        catch (Exception ex) { user = ""; }
         
-        if(sessionContainer.isAdmin()){
-            
-            RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
-            view.forward(request, response);
-            
-        } else if (sessionContainer.isLoggedIn()) {
-            
-            response.sendRedirect("manage");
-            
-        } else {
-            request.getSession().invalidate();
-            FlashMessage.createWarnMessage(request.getSession(), "You are not logged in<br>Please login again", "Invalid Session");
-            response.sendRedirect("");
-        }
+        try {
+            switch (user) {
+                case "user-admin":
+                    RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
+                    view.forward(request, response);
+                    break;
+                case "user-user":
+                    response.sendRedirect("manage");
+                    break;
+                default:
+                    request.getSession().invalidate();
+                    FlashMessage.createWarnMessage(request.getSession(), "You are not logged in<br>Please login again", "Invalid Session");
+                    response.sendRedirect("");
+                    break;
+            }
+        } catch (IOException | ServletException r) {}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
