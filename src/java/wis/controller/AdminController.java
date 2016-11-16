@@ -7,12 +7,15 @@ package wis.controller;
 
 import wis.utils.FlashMessage;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import wis.datastore.userBean;
+import wis.utils.DBConnection;
 
 /**
  *
@@ -41,6 +44,11 @@ public class AdminController extends HttpServlet {
         try {
             switch (user) {
                 case "user-admin":
+                    
+                    DBConnection db = new DBConnection();
+                    List<userBean> users = db.getUsers();
+                    request.setAttribute("users", users);
+                    
                     RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/admin-panel.jsp");
                     view.forward(request, response);
                     break;

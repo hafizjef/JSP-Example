@@ -3,6 +3,9 @@ package wis.utils;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import wis.datastore.userBean;
 
 public class DBConnection {
     
@@ -64,11 +67,48 @@ public class DBConnection {
         return isAdmin != 0;
     }
     
+    public List getUsers(){
+        List<userBean> users = new ArrayList<>();
+        
+        try { Class.forName("com.mysql.jdbc.Driver"); }
+        catch (ClassNotFoundException e) {}
+        
+        // Try with resource
+        try (
+                Connection con = DriverManager.getConnection(url, userName, password);
+                PreparedStatement ps = getAllUser(con); 
+                ResultSet rs = ps.executeQuery()
+            ) {
+            
+            while (rs.next()) {
+                userBean user = new userBean();
+                user.setId(rs.getInt("user_id"));
+                user.setName(rs.getString("username"));
+                user.setIsAdmin(rs.getInt("is_admin"));
+                users.add(user);
+            }
+            
+            return users;
+            
+        } catch (Exception e) { 
+            System.out.println("DB Error, Return NULL!");
+            return null; 
+        }
+    }
+    
+        
+    
     
     private PreparedStatement createLoginStatement(Connection con, String uname) throws SQLException {
         String sql = "SELECT * FROM users WHERE username=? LIMIT 1";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setString(1, uname);
+        return ps;
+    }
+    
+    private PreparedStatement getAllUser(Connection con) throws SQLException {
+        String sql = "SELECT * FROM users";
+        PreparedStatement ps = con.prepareStatement(sql);
         return ps;
     }
 }

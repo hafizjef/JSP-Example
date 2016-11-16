@@ -45,24 +45,8 @@
             <a class="app-bar-element branding" href="cpanel"><span class="mif-user-md mif-2x" style="height: 36px; display: inline-block;"></span>&nbsp;</a>
             <span class="app-bar-divider"></span>
             <ul class="app-bar-menu">
-                <li><a href="cpanel">Dashboard</a></li>
-                <li>
-                    <a href="" class="dropdown-toggle">Users</a>
-                    <ul class="d-menu" data-role="dropdown">
-                    <li><a href="">New user</a></li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="" class="dropdown-toggle">Reopen</a>
-                        <ul class="d-menu" data-role="dropdown">
-                            <li><a href="">Project 1</a></li>
-                            <li><a href="">Project 2</a></li>
-                            <li><a href="">Project 3</a></li>
-                            <li class="divider"></li>
-                            <li><a href="">Clear list</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                </li>
+                <li><a href="cpanel">User List</a></li>
+                <li><a href="cpanel">Add User</a></li>
             </ul>
             <div class="app-bar-element place-right">
                 <span class="dropdown-toggle"><span class="mif-cog" style="margin-right: 5px"></span> ${username}</span>
@@ -80,22 +64,6 @@
         <div class="page-content">
             <div class="flex-grid" style="height: 100%">
                 <div class="row" style="height: 100%;">
-                    <div class="cell size-p20" id="cell-sidebar">
-                        <ul class="sidebar2 dark" style="height: 100%; background-color: #3c3f41; min-width: 100%">
-                            <li class="active"><a href="#"><span class="mif-home icon"></span>Dashboard</a></li>
-                            <li class="stick"><a href="lolol"><span class="mif-cog icon"></span>Layouts</a></li>
-                            <li class="stick">
-                                <a class="dropdown-toggle" href="#"><span class="mif-tree icon"></span>Sub menu</a>
-                                <ul class="d-menu" data-role="dropdown">
-                                    <li><a href=""><span class="mif-vpn-publ icon"></span> Subitem 1</a></li>
-                                    <li><a href="">Subitem 2</a></li>
-                                    <li><a href="">Subitem 3</a></li>
-                                    <li><a href="">Subitem 4</a></li>
-                                    <li class="disabled"><a href="">Subitem 5</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
                     <div class="cell auto-size" id="cell-content">
                         <div class="padding20">
                             <jsp:doBody/>  
