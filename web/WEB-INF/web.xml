@@ -44,4 +44,27 @@
         <error-code>404</error-code>
         <location>/WEB-INF/views/error-404.jsp</location>
     </error-page>
+    <resource-ref>
+        <res-ref-name>jdbc/dataStore</res-ref-name>
+        <res-type>javax.sql.ConnectionPoolDataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+    <security-constraint>
+        <web-resource-collection>
+          <web-resource-name>WEB-INF</web-resource-name>
+          <url-pattern>/WEB-INF/</url-pattern>
+          <url-pattern>*.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+          <!-- empty to prevent anyone from accessing JSP files under "/hidden" -->
+        </auth-constraint>
+    </security-constraint>
+    <context-param>
+        <param-name>database.name</param-name>
+        <param-value>jdbc/dataStore</param-value>
+    </context-param>
+    <listener>
+        <listener-class>wis.listener.Config</listener-class>
+    </listener>
 </web-app>

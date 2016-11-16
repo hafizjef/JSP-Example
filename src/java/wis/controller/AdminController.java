@@ -45,7 +45,7 @@ public class AdminController extends HttpServlet {
             switch (user) {
                 case "user-admin":
                     
-                    DBConnection db = new DBConnection();
+                    DBConnection db = new DBConnection(request.getServletContext());
                     List<userBean> users = db.getUsers();
                     request.setAttribute("users", users);
                     

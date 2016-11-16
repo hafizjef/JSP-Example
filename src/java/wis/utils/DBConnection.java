@@ -5,37 +5,30 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.sql.DataSource;
 import wis.datastore.userBean;
+import wis.listener.Config;
 
 public class DBConnection {
     
-    private final String url = "jdbc:mysql://localhost:3306/wis";
-    private final String userName = "root";
-    private final String password = "root";
     
     private int userId = 0;
     private int isAdmin = 0;
     
+    private final DataSource dataSource;
     
-    /*
-    * TODOS;
-    * - Change doLogin to int?
-    * - Implement error message to login page
-    * - Implement session handling
-    * RETURN CODES;
-    * 0 = Default (Application Error)
-    * 1 = Successfull Login
-    * 2 = Authentication Error
-    * 3 = User not found
-    */
+    public DBConnection(ServletContext context){
+        dataSource = Config.getInstance(context).getDataSource();
+    }
+    
+
     public int doLogin(String uname, String passw) throws NoSuchAlgorithmException, 
             InvalidKeySpecException, ClassNotFoundException{
         
-        Class.forName("com.mysql.jdbc.Driver");
-        
         // Try with resource
         try (
-                Connection con = DriverManager.getConnection(url, userName, password);
+                Connection con = dataSource.getConnection();
                 PreparedStatement ps = createLoginStatement(con, uname); 
                 ResultSet rs = ps.executeQuery()
             ) {
@@ -70,12 +63,9 @@ public class DBConnection {
     public List getUsers(){
         List<userBean> users = new ArrayList<>();
         
-        try { Class.forName("com.mysql.jdbc.Driver"); }
-        catch (ClassNotFoundException e) {}
-        
         // Try with resource
         try (
-                Connection con = DriverManager.getConnection(url, userName, password);
+                Connection con = dataSource.getConnection();
                 PreparedStatement ps = getAllUser(con); 
                 ResultSet rs = ps.executeQuery()
             ) {
@@ -98,7 +88,7 @@ public class DBConnection {
     
         
     
-    
+    // SQL Statement 
     private PreparedStatement createLoginStatement(Connection con, String uname) throws SQLException {
         String sql = "SELECT * FROM users WHERE username=? LIMIT 1";
         PreparedStatement ps = con.prepareStatement(sql);

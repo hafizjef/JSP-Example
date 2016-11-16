@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
             FlashMessage.createAlertMessage(session, "Null request", "Error");
             response.sendRedirect("");
         } else {
-            DBConnection db = new DBConnection();
+            DBConnection db = new DBConnection(request.getServletContext());
             try {
                 
                 int loginStatus = db.doLogin(username, password);
