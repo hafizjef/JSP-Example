@@ -6,12 +6,15 @@
 package wis.controller;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import wis.datastore.patientBean;
+import wis.dbutils.patientDB;
 import wis.utils.FlashMessage;
 
 /**
@@ -39,6 +42,10 @@ public class UserController extends HttpServlet {
         catch (Exception ex) { user = ""; }
         
         if(user.equals("user-user") || user.equals("user-admin")){
+            patientDB db = new patientDB(request.getServletContext());
+            List<patientBean> patients = db.getPatientInfo();
+            request.setAttribute("patients", patients);
+            
             RequestDispatcher view = request.getRequestDispatcher("WEB-INF/views/user-panel.jsp");
             view.forward(request, response);
         } else {

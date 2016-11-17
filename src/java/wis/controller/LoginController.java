@@ -5,7 +5,7 @@
  */
 package wis.controller;
 
-import wis.utils.DBConnection;
+import wis.dbutils.userDB;
 import wis.utils.FlashMessage;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -71,7 +71,7 @@ public class LoginController extends HttpServlet {
             FlashMessage.createAlertMessage(session, "Null request", "Error");
             response.sendRedirect("");
         } else {
-            DBConnection db = new DBConnection(request.getServletContext());
+            userDB db = new userDB(request.getServletContext());
             try {
                 
                 int loginStatus = db.doLogin(username, password);

@@ -1,4 +1,4 @@
-package wis.utils;
+package wis.dbutils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -9,8 +9,9 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 import wis.datastore.userBean;
 import wis.listener.Config;
+import wis.utils.SecurityHelper;
 
-public class DBConnection {
+public class userDB {
     
     
     private int userId = 0;
@@ -18,7 +19,7 @@ public class DBConnection {
     
     private final DataSource dataSource;
     
-    public DBConnection(ServletContext context){
+    public userDB(ServletContext context){
         dataSource = Config.getInstance(context).getDataSource();
     }
     

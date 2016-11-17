@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import wis.datastore.userBean;
-import wis.utils.DBConnection;
+import wis.dbutils.userDB;
 
 /**
  *
@@ -45,7 +45,7 @@ public class AdminController extends HttpServlet {
             switch (user) {
                 case "user-admin":
                     
-                    DBConnection db = new DBConnection(request.getServletContext());
+                    userDB db = new userDB(request.getServletContext());
                     List<userBean> users = db.getUsers();
                     request.setAttribute("users", users);
                     
