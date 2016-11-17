@@ -2,8 +2,8 @@
     
     <head>
     <!-- load -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="static/css/custom.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="${pageContext.request.contextPath}/static/css/custom.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
     
     <title>Page Not Found</title>

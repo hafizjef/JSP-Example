@@ -41,20 +41,20 @@
     </head>
     
     <body>
-        <div class="app-bar fixed-top red" data-role="appbar">
+        <div class="app-bar fixed-top" data-role="appbar">
             <a class="app-bar-element branding" href="cpanel"><span class="mif-user-md mif-2x" style="height: 36px; display: inline-block;"></span>&nbsp;</a>
             <span class="app-bar-divider"></span>
             <ul class="app-bar-menu">
-                <li><a href="cpanel">User List</a></li>
-                <li><a href="cpanel">Add User</a></li>
+                <li><a href="manage">Home</a></li>
+                <li><a href="help">Help</a></li>
             </ul>
             <div class="app-bar-element place-right">
-                <span class="dropdown-toggle"><span class="mif-cog" style="margin-right: 5px"></span> ${username}</span>
-            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-white1" data-role="dropdown" data-no-close="true" style="width: 220px">
-                <h2 class="text-light">Quick settings</h2>
+                <span class="dropdown-toggle"><span class="mif-cog" style="margin-right: 5px"></span> Welcome, <b>${username}</b></span>
+            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-white1" data-role="dropdown" data-no-close="true" style="width: 222px">
+                <h2 class="text-light fg-dark">Quick Settings</h2>
                 <ul class="unstyled-list fg-dark">
-                    <li><a href="settings" class="fg-black fg-hover-yellow">Settings</a></li>
-                    <li><a href="logout" class="fg-black fg-hover-yellow">Logout</a></li>
+                    <li><a href="settings" class="fg-white1 fg-hover-yellow">Settings</a></li>
+                    <li><a href="logout" class="fg-white2 fg-hover-yellow">Logout</a></li>
                 </ul>
             </div>
             </div>
@@ -62,15 +62,7 @@
         
         <!-- Body -->
         <div class="page-content">
-            <div class="flex-grid" style="height: 100%">
-                <div class="row" style="height: 100%;">
-                    <div class="cell auto-size" id="cell-content">
-                        <div class="padding20">
-                            <jsp:doBody/>  
-                        </div>
-                    </div>
-                </div>               
-            </div>
+            <jsp:doBody/>
         </div>
     </body>
     <tags:flash-message/>

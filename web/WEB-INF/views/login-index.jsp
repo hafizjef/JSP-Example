@@ -10,12 +10,12 @@
 
     <title>WIS - Login</title>
 
-    <link href="static/css/metro.min.css" rel="stylesheet">
-    <link href="static/css/metro-icons.min.css" rel="stylesheet">
-    <link href="static/css/metro-responsive.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/metro.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/metro-icons.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/static/css/metro-responsive.min.css" rel="stylesheet">
 
-    <script src="static/js/jquery-2.2.4.min.js"></script>
-    <script src="static/js/metro.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery-2.2.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/metro.min.js"></script>
  
     <style>
         .login-form {
