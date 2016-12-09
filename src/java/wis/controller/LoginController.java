@@ -83,13 +83,13 @@ public class LoginController extends HttpServlet {
                         if(db.isAdmin()){
                             session.setAttribute("username", username);
                             session.setAttribute("userRole", "user-admin");
-                            FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
+                            // FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
                             response.sendRedirect("cpanel");
                             break;
                         } else {
                             session.setAttribute("username", username);
                             session.setAttribute("userRole", "user-user");
-                            FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
+                            // FlashMessage.createSuccessMessage(session, String.format("Logged in as <b>%s</b>", username), "Login Successfull");
                             response.sendRedirect("manage");
                             break;
                         }
